@@ -12,19 +12,19 @@
 #include"imGui/imgui_impl_glfw_gl3.h"
 
 using namespace std;
-//���ûص�����
+// 系统相关操作
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow *window, double xPos, double yPos);
 void scroll_callback(GLFWwindow *window, double xOffset, double yOffset);
-//���ڳ�ʼ������
+// 初始化GLFW
 GLFWwindow* initialGLFW_GLAD();
 void drawCube(GLFWwindow* window);
 
 // homework 6
 void drawCubeAndLight(GLFWwindow* window);
 Shader setLightMenu(GLFWwindow *window);
-//����imGui�Լ����ɴ���
+//设置菜单
 void setGui(GLFWwindow* window);
 void setMenu(GLFWwindow* window, Shader shader);
 
@@ -40,12 +40,14 @@ void scale(glm::mat4 &transform);
 void revolute(glm::mat4 &transform);
 
 void lightMove();
-//���ô��ڴ�С
+// 设置显示相关参数
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
+// 设置cube大小
 const float length = 0.5f;
 
+// 设置移动参数
 static float degreeRotate = 0.1f;
 static float lenTranslate = 0.01f;
 static float ratioScale = 1.0f;
@@ -55,6 +57,7 @@ static float revoluteRadius = 2.0f;
 static float translateStep = 0.05f;
 static float scaleStep = 0.01f;
 
+// 设置位置参数
 float eyePos[3] = {0.0f, 0.0f, 8.0f};
 float cubePos[3] = { -1.5f, 0.5f, -1.5f };
 float lightPos[3] = { 1.2f, 1.0f, 2.0f };
@@ -65,7 +68,7 @@ bool firstMouse = true;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 float fov = 45.0;
-
+// 设置光照模型的参数
 float k_a = 1;
 float k_d = 1;
 float k_s = 1;
@@ -109,24 +112,24 @@ GLFWwindow* initialGLFW_GLAD() {
 	return window;
 }
 
-//��ʼ��imGui
+//锟斤拷始锟斤拷imGui
 void setGui(GLFWwindow* window) {
 	ImGui_ImplGlfwGL3_Init(window, true);
 	ImGui::StyleColorsClassic();
 }
-//����Gui����
+//锟斤拷锟斤拷Gui锟斤拷锟斤拷
 void setMenu(GLFWwindow* window, Shader shader) {
 	//shader.use();
-	//// ͶӰ����
+	//// 投影锟斤拷锟斤拷
 	//glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 	//	(GLfloat)(SCR_WIDTH) / SCR_HEIGHT, 0.1f, 100.0f);
-	//// �ӱ任����
+	//// 锟接变换锟斤拷锟斤拷
 	//glm::mat4 view;
 	//glm::vec3 tempPos = glm::vec3(eyePos[0], eyePos[1], eyePos[2]);
 	////view = glm::translate(view, tempPos);
 	//view = glm::lookAt(tempPos,
 	//	glm::vec3(cubePos[0], cubePos[1], cubePos[2]), glm::vec3(0.0f, 1.0f, 0.0f));
-	//// ģ�ͱ任����
+	//// 模锟酵变换锟斤拷锟斤拷
 	////glm::mat4 projection = glm::mat4();
 	////glm::mat4 view = glm::mat4();
 	//glm::mat4 transform = glm::mat4();
@@ -230,7 +233,7 @@ Shader setLightMenu(GLFWwindow *window)
 void drawCube(GLFWwindow* window) {
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-	//������ɫ��·��
+	//锟斤拷锟斤拷锟斤拷色锟斤拷路锟斤拷
 	char *vertexShaderPath = "object.vs";
 	char *fragmentShaderPath = "object.fs";
 	float vertices[] = {
@@ -246,7 +249,7 @@ void drawCube(GLFWwindow* window) {
 	};
 	unsigned int indices[] = {
 		0, 1, 3,
-		1, 2, 3,   //ǰ�� 
+		1, 2, 3,   //前锟斤拷 
 		4, 5, 6,
 		4, 6, 7,
 		0, 1, 5,
@@ -271,7 +274,7 @@ void drawCube(GLFWwindow* window) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// ��ɫ����
+	// 锟斤拷色锟斤拷锟斤拷
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
@@ -371,11 +374,11 @@ void drawCubeAndLight(GLFWwindow* window) {
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// ��Դλ��
+	// 锟斤拷源位锟斤拷
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	//��Ⱦѭ��
+	//锟斤拷染循锟斤拷
 	while (!glfwWindowShouldClose(window)) {
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
@@ -406,7 +409,7 @@ void drawCubeAndLight(GLFWwindow* window) {
 		objectShader.setMat4("view", view);
 		objectShader.setMat4("model", model);
 
-		// ��Ⱦ����
+		// 锟斤拷染锟斤拷锟斤拷
 		glBindVertexArray(cubeVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -419,7 +422,7 @@ void drawCubeAndLight(GLFWwindow* window) {
 		model = glm::scale(model, glm::vec3(0.2f));
 		lightShader.setMat4("model", model);
 
-		// ��Ⱦ��Դ
+		// 锟斤拷染锟斤拷源
 		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glfwSwapBuffers(window);
