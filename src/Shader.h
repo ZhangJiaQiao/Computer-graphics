@@ -1,8 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad\glad.h>
-#include <glm\glm.hpp>
+#include "glad/glad.h"
+#include "glm/glm.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -11,11 +11,11 @@
 class Shader {
 public:
 	unsigned int ID;
-	// ¹¹Ôìº¯Êý
+	// ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
-	// Ê¹ÓÃ/¼¤»î
+	// Ê¹ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
 	void use();
-	// uniform¹¤¾ß
+	// uniformï¿½ï¿½ï¿½ï¿½
 	void setBool(const std::string &name, bool value) const;
 	void setInt(const std::string &name, int value) const;
 	void setFloat(const std::string &name, float value) const;
