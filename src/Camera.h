@@ -10,7 +10,7 @@ enum Camera_Movement {
 	LEFT,
 	RIGHT
 };
-// Ĭ�ϵ������������ֵ
+// 榛橀敓杈冪鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熻锟�
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 2.5f;

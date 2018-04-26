@@ -313,6 +313,31 @@ void drawCubeAndLight(GLFWwindow* window) {
 	//Shader objectShader = Shader(objectVertexShaderPath, objectFragmentShaderPath);
 	Shader lightShader  = Shader(lightVertexShaderPath, lightFragmentShaderPath);
 	//Shader gouraudLightShader = Shader(gouraudVertexShaderPath, lightFragmentShaderPath);
+	
+	GLfloat planeLength = 25.0f;
+	GLfloat planeHeight = 2.0f;
+	GLfloat planeVertices[] = {
+        //位置                                     //法向量         //Texture Coords
+         planeLength, -planeHeight,  planeLength, 0.0f, 1.0f, 0.0f, planeLength, 0.0f,
+        -planeLength, -planeHeight, -planeLength, 0.0f, 1.0f, 0.0f, 0.0f, planeLength,
+        -planeLength, -planeHeight,  planeLength, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+         planeLength, -planeHeight,  planeLength, 0.0f, 1.0f, 0.0f, planeLength, 0.0f,
+         planeLength, -planeHeight, -planeLength, 0.0f, 1.0f, 0.0f, planeLength, planeLength,
+        -planeLength, -planeHeight, -planeLength, 0.0f, 1.0f, 0.0f, 0.0f, planeLength
+    };
+    GLuint planeVBO, planeVAO;
+    glGenVertexArrays(1, &planeVAO);
+    glGenBuffers(1, &planeVBO);
+    glBindVertexArray(planeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), &planeVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    //glEnableVertexAttribArray(2);
+    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+    //glBindVertexArray(0);
 
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -409,6 +434,9 @@ void drawCubeAndLight(GLFWwindow* window) {
 		objectShader.setMat4("view", view);
 		objectShader.setMat4("model", model);
 
+		glBindVertexArray(planeVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
 		// 锟斤拷染锟斤拷锟斤拷
 		glBindVertexArray(cubeVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -425,6 +453,7 @@ void drawCubeAndLight(GLFWwindow* window) {
 		// 锟斤拷染锟斤拷源
 		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
