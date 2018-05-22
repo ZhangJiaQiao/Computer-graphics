@@ -1,6 +1,6 @@
 
-ShadowMain:camera.o shader.o glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw_gl3.o
-	g++ -o ShadowMain ShadowMain.cpp camera.o shader.o glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw_gl3.o -lglfw -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+CurveMain:camera.o shader.o glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw_gl3.o
+	g++ -o CurveMain CurveMain.cpp camera.o shader.o glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw_gl3.o -lglfw -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 camera.o:
 	g++ -c Camera.cpp
 shader.o:
